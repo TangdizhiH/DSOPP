@@ -4,6 +4,8 @@ project(dsopp C CXX)
 include(CheckIPOSupported)
 check_ipo_supported(RESULT lto_supported OUTPUT lto_error)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 if(lto_supported AND LTO_OPTIMIZATION)
   message(STATUS "IPO / LTO enabled")
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)

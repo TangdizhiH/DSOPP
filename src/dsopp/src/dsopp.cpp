@@ -113,6 +113,7 @@ void DSOPP<Motion>::run(const size_t number_of_threads) {
   size_t camera_frame_count = 0;
   size_t acceptable_remainder = 0;
 
+  // synchronizer_- is passed from func
   while (auto frame = synchronizer_->sync(agent_->sensors())) {
     LOG(INFO) << "processing frame " << frame->id();
     auto frame_ptr = frame.get();
