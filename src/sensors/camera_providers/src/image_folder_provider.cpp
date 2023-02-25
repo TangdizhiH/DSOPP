@@ -29,7 +29,7 @@ bool isImage(const std::string &extension) { return kImageExtensions.count(exten
 /**
  * function to read all paths to images in the given directory
  *
- * @param path path to the given directory
+ * @param path path to the given directo ry
  * @param[out] file_paths all paths to images in the given directory
  */
 void readImages(const std::string &path, std::map<uint32_t, std::string> &file_paths) {

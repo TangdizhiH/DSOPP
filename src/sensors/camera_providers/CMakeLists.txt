@@ -1,7 +1,7 @@
 add_library(
   camera_providers
   src/camera_data_frame.cpp src/fabric.cpp src/image_folder_provider.cpp
-  src/image_video_provider.cpp src/npy_folder_provider.cpp)
+  src/image_video_provider.cpp src/npy_folder_provider.cpp src/image_ros_provider.cpp)
 
 target_include_directories(
   camera_providers PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
