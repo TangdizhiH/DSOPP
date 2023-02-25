@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM osrf/ros:noetic-desktop-full
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -94,7 +94,7 @@ RUN cd /usr/include && ln -sf eigen3/Eigen Eigen &&  ln -sf eigen3/unsupported u
 WORKDIR /
 
 ARG USER_ID=1000
-ARG GROUP_ID
+ARG GROUP_ID=1000
 
 RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
