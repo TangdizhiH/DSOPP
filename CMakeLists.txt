@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.11.4)
 project(dsopp C CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# seems not necessary, temporarily left out
+# include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+
 include(CheckIPOSupported)
 check_ipo_supported(RESULT lto_supported OUTPUT lto_error)
 
@@ -79,3 +84,5 @@ add_subdirectory(pydsopp)
 enable_testing()
 include(cmake/addTest.cmake)
 add_subdirectory(test)
+
+find_package(catkin REQUIRED)
