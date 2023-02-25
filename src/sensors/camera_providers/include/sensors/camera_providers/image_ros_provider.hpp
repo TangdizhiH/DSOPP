@@ -10,13 +10,12 @@
 
 #include "sensors/camera_providers/camera_data_frame.hpp"
 #include "sensors/camera_providers/camera_provider.hpp"
+#include <ros/ros.h>
 
 namespace dsopp {
 
 // todo: got timestamp without using the following struct
-namespace common::file_tools {
-struct CameraFrameTimes;
-}  // namespace common::file_tools
+
 namespace sensors {
 namespace providers {
 

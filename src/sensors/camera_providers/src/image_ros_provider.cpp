@@ -1,5 +1,4 @@
 #include "sensors/camera_providers/image_ros_provider.hpp"
-#include <ros/ros.h>
 
 #include <filesystem>
 #include <fstream>
@@ -15,7 +14,7 @@ namespace providers {
 
 namespace {
 
-void ImageRosProvider::TopicCallback() {}
+void ImageRosProvider::TopicCallback(const sensor_msgs::Image& img_msg) {}
 
 ImageRosProvider::ImageRosProvider(std::string topic) : topic_(topic) { 
   ros::NodeHandle nh; 
