@@ -76,6 +76,7 @@ int main(int argc, char *argv[]) {
 
   const size_t kSaveStride = 150;
 
+  ros::init(argc, argv, "dsopp");
   std::unique_ptr<dsopp::DSOPP<Motion>> dsopp;
   dsopp = dsopp::DSOPP<Motion>::loadFromYaml(FLAGS_config_file_path, config_args);
 

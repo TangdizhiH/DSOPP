@@ -1,7 +1,10 @@
 #ifndef DSOPP_IMAGE_ROS_CAMERA_DATA_PROVIDER_HPP
 #define DSOPP_IMAGE_ROS_CAMERA_DATA_PROVIDER_HPP
 
+#include <cstdint>
 #include <cstring>
+#include <deque>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -22,8 +25,7 @@ namespace providers {
 class ImageRosProvider final : public CameraProvider {
  public:
 
-  void TopicCallback(const sensor_msgs::Image& img_msg);
-  explicit ImageRosProvider(std::string topic);
+  explicit ImageRosProvider(std::string image_topic, std::string camera_info_topic, bool convert_to_grayscale);
   // The parmaters should be passed. The ros topic of image to subscribe, whether to convert to grayscale
 
   std::unique_ptr<CameraDataFrame> nextFrame() override;
@@ -44,17 +46,23 @@ class ImageRosProvider final : public CameraProvider {
    * Used to fill the batch of frames when it is empty
    *
    */
-  void fillBatch();
+  void ImageReadCallback(const sensor_msgs::Image& img_msg);
+  void CameraInfoCallack(const sensor_msgs::CameraInfo info_msg);
 
-  /**
-   * @frame_batch_
-   * the currently fed frames
-   */
-  std::string topic_;
+  bool convert_to_grayscale_;
   std::deque<std::unique_ptr<CameraDataFrame>> frame_batch_;
   /** Container containing times */
   std::map<uint64_t, common::file_tools::CameraFrameTimes> times_;
   ros::Subscriber subscriber_;
+  ros::Subscriber camera_info_subscriber_;
+  
+  std::string image_topic_;
+  std::string camera_info_topic_;
+
+  std::string distortion_model_;
+  /** Container containing camera frames */
+  std::deque<std::unique_ptr<CameraDataFrame>> frame_batch_;
+
 };
 
 }  // namespace providers
