@@ -196,6 +196,13 @@ navigate to .
 ./build/src/application/dsopp_main --config_file_path ./test/test_data/tummono/sequence_<id>/<standart/fast/dense>.yaml
 ```
 
+To run on Ros topics:
+
+```
+navigate to .
+./build/src/application/dsopp_main --config_file_path ./test/test_data/tummono/ros/<standart/fast/dense>.yaml
+```
+
 `dsopp_main` outputs `track.bin` file. This is the whole track output with points and all frame poses.
 To view it use `viewer_main` application
 
