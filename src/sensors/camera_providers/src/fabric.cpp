@@ -1,11 +1,13 @@
 #include "sensors/camera_providers/fabric.hpp"
 
 #include <glog/logging.h>
+#include <memory>
 
 #include "common/file_tools/camera_frame_times.hpp"
 #include "sensors/camera_providers/image_folder_provider.hpp"
 #include "sensors/camera_providers/image_video_provider.hpp"
 #include "sensors/camera_providers/npy_folder_provider.hpp"
+#include "sensors/camera_providers/image_ros_provider.hpp"
 
 namespace dsopp {
 namespace sensors {
@@ -59,6 +61,22 @@ std::unique_ptr<CameraProvider> createCameraProvider(const std::map<std::string,
     const auto &timestamps_file = std::any_cast<std::string>(provider.at("timestamps"));
     return std::make_unique<ImageFolderProvider>(path, timestamps_file, batch_size, start_frame, end_frame,
                                                  read_grayscale);
+  } else if (provider_type == "ros") {
+    
+    if (provider.count("image_topic") == 0) {
+      LOG(WARNING) << "Missing field \"image_topic\" in the image_ros provider";
+      return nulltr;
+    }
+    if (provider.count("camera_info_topic") == 0) {
+      LOG(WARNING) << "Missing field \"camera_info_topic\" in the image_ros provider";
+      return nullptr;
+    }
+    
+    std::string image_topic = parameters.at("image_topic");
+    std::string camera_info_topic = parameters.at("camera_info_topic");
+
+    return make_unique<ImageRosProvider>(image_topic, camera_info_topic, read_grayscale);
+
   } else if (provider_type == "video") {
     if (provider.count("video_file") == 0) {
       LOG(WARNING) << "Missing field \"video_file\" in the image video provider";

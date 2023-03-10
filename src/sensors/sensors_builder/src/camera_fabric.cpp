@@ -127,7 +127,7 @@ std::unique_ptr<Camera> createCamera(
   return std::make_unique<Camera>(sensor_name, sensor_id, camera_settings, std::move(provider),
                                   std::move(tracking_feature_extractor), std::move(transformers),
                                   std::move(semantics_provider), std::move(semantic_filter));
-}
+} // end of createCamera
 
 template <bool TRANSFORM_TO_PINHOLE>
 std::optional<calibration::CameraSettings> createCameraSettings(
