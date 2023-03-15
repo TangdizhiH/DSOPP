@@ -66,6 +66,8 @@ RUN rosdep init && \
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-noetic-desktop-full=1.5.0-1* \
+    python3-catkin-tools \
+    ros-noetic-sensor-msgs  \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
@@ -77,5 +79,7 @@ RUN apt-get update \
 WORKDIR /
 
 USER user
+
+RUN pip3 install catkin_tools
 
 CMD ["/bin/bash"]
