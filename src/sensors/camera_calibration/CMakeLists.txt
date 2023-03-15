@@ -1,6 +1,7 @@
 add_library(
-  camera_calibration src/fabric.cpp src/undistorter.cpp src/camera_mask.cpp
-                     src/camera_settings.cpp src/camera_calibration.cpp)
+  camera_calibration STATIC
+  src/fabric.cpp src/undistorter.cpp src/camera_mask.cpp
+  src/camera_settings.cpp src/camera_calibration.cpp)
 
 target_include_directories(
   camera_calibration

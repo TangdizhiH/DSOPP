@@ -6,8 +6,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # seems not necessary, temporarily left out
 # include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
-include(CheckIPOSupported)
-check_ipo_supported(RESULT lto_supported OUTPUT lto_error)
+# include(CheckIPOSupported) check_ipo_supported(RESULT lto_supported OUTPUT
+# lto_error)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -32,7 +32,13 @@ include(cmake/tools.cmake)
 include(dependencies.cmake)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -pthread")
+
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -pthread")
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+link_libraries(Threads::Threads)
+
 set(CMAKE_CXX_FLAGS
     "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wpedantic -Wconversion -fdiagnostics-color=always"
 )
@@ -85,4 +91,17 @@ enable_testing()
 include(cmake/addTest.cmake)
 add_subdirectory(test)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED
+	geometry_msgs
+	roscpp
+	rospy
+	sensor_msgs
+	std_msgs
+	tf
+	image_transport
+        fla_utils
+        fla_msgs
+        cv_bridge
+        message_generation
+        mav_msgs
+  )

@@ -1,5 +1,6 @@
-add_library(camera_transformers src/camera_resizer.cpp src/image_cropper.cpp
-                                src/fabric.cpp src/camera_transformer.cpp)
+add_library(
+  camera_transformers STATIC src/camera_resizer.cpp src/image_cropper.cpp
+                             src/fabric.cpp src/camera_transformer.cpp)
 
 target_include_directories(
   camera_transformers

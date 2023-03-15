@@ -1,4 +1,4 @@
-add_library(sensor src/synchronized_frame.cpp)
+add_library(sensor STATIC src/synchronized_frame.cpp)
 
 target_include_directories(
   sensor PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

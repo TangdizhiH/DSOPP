@@ -196,11 +196,11 @@ navigate to .
 ./build/src/application/dsopp_main --config_file_path ./test/test_data/tummono/sequence_<id>/<standart/fast/dense>.yaml
 ```
 
-To run on Ros topics:
+To run on Ros topics, note that you should pass only the ros yaml only with `--ros=true` enabled:
 
 ```
 navigate to .
-./build/src/application/dsopp_main --config_file_path ./test/test_data/tummono/ros/<standart/fast/dense>.yaml
+./build/src/application/dsopp_main --ros=true --config_file_path ./test/test_data/tummono/ros/<standart/fast/dense>.yaml
 ```
 
 `dsopp_main` outputs `track.bin` file. This is the whole track output with points and all frame poses.
