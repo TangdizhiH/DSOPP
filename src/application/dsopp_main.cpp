@@ -27,6 +27,7 @@ DEFINE_string(config_file_path, MONO_CONFIG_FILE, "path to config file");
 DEFINE_string(output_file_path, "track.bin", "path to output file");
 DEFINE_bool(visualization, true, "flag to enable visualization");
 DEFINE_bool(deterministic, false, "flag to turn off parallelism");
+DEFINE_bool(ros, true, "flag to turn on ros");
 DEFINE_bool(refine_calibration, false, "flag to enable camera calibration refinement");
 DEFINE_uint32(start_frame, 0, "start frame to optimize in camera calibration refinement");
 DEFINE_uint32(frames_number, 80, "number of frames to optimize in camera calibration refinement");
@@ -76,7 +77,10 @@ int main(int argc, char *argv[]) {
 
   const size_t kSaveStride = 150;
 
-  ros::init(argc, argv, "dsopp");
+  if (FLAGS_ros) {
+    ros::init(argc, argv, "dsopp");
+  }
+
   std::unique_ptr<dsopp::DSOPP<Motion>> dsopp;
   dsopp = dsopp::DSOPP<Motion>::loadFromYaml(FLAGS_config_file_path, config_args);
 
@@ -112,10 +116,15 @@ int main(int argc, char *argv[]) {
   }
 #endif
 
+  std::thread ros_thread;
+  if (FLAGS_ros) {
+    ros_thread = std::thread([&]() { ros::spin(); });
+  }
+
   const uint32_t kMaxNumberOfThreads = FLAGS_deterministic ? 2u : 8u;
 
   const size_t number_of_threads = std::clamp(std::thread::hardware_concurrency(), 1u, kMaxNumberOfThreads);
-  tbb::global_control tbb_thread_count(tbb::global_control::max_allowed_parallelism, number_of_threads - 1);
+  tbb::global_control tbb_thread_count(tbb::global_control::max_allowed_parallelism, number_of_threads - 2);
 
   dsopp->run(number_of_threads - 1);
 

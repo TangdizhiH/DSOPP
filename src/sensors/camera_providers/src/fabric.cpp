@@ -5,9 +5,9 @@
 
 #include "common/file_tools/camera_frame_times.hpp"
 #include "sensors/camera_providers/image_folder_provider.hpp"
+#include "sensors/camera_providers/image_ros_provider.hpp"
 #include "sensors/camera_providers/image_video_provider.hpp"
 #include "sensors/camera_providers/npy_folder_provider.hpp"
-#include "sensors/camera_providers/image_ros_provider.hpp"
 
 namespace dsopp {
 namespace sensors {
@@ -62,7 +62,6 @@ std::unique_ptr<CameraProvider> createCameraProvider(const std::map<std::string,
     return std::make_unique<ImageFolderProvider>(path, timestamps_file, batch_size, start_frame, end_frame,
                                                  read_grayscale);
   } else if (provider_type == "ros") {
-    
     if (provider.count("image_topic") == 0) {
       LOG(WARNING) << "Missing field \"image_topic\" in the image_ros provider";
       return nulltr;
@@ -71,7 +70,7 @@ std::unique_ptr<CameraProvider> createCameraProvider(const std::map<std::string,
       LOG(WARNING) << "Missing field \"camera_info_topic\" in the image_ros provider";
       return nullptr;
     }
-    
+
     std::string image_topic = parameters.at("image_topic");
     std::string camera_info_topic = parameters.at("camera_info_topic");
 
