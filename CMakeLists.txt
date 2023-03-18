@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.11.4)
 project(dsopp C CXX)
 
+set(CMAKE_CUDA_COMPILER "")
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # seems not necessary, temporarily left out
